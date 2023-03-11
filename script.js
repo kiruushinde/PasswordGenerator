@@ -9,16 +9,19 @@ const numberChk = document.querySelector("#numbers");
 const symbolChk = document.querySelector("#symbols");
 const passIndicator = document.querySelector("[passStrengthIndicator]");
 const generateBtn = document.querySelector("#generatePassword");
-const clearBtn = document.querySelector("#clearPassword");
+const clearBtn = document.querySelector(".clearPassword");
 const allCheckbox = document.querySelectorAll("input[type=checkbox]");
-
+const checks = document.querySelectorAll(".check");
+const weak = document.querySelector(".weak");
+const strong = document.querySelector(".strong");
+const medium = document.querySelector(".medium");
 const symbols = '~`!@#$%^&*()_-+={[}]|:;"<,>.?/';
 
 // console.log(allCheckbox);
 
 // set all default value's first 
 let password = "";
-let passLength = 10;
+let passLength = 0;
 let chckboxCount = 0;
 handleSlider();
 // password strength div is of color grey white.
@@ -38,6 +41,25 @@ function handleSlider() {
 
 // setting color
 function setIndicator(color) {
+
+    if (color == "#f00") {
+        weak.classList.add("activeWeak");
+
+        setTimeout(() => {
+            weak.classList.remove("activeWeak");
+        }, 2000);
+    } else if (color == "#0f0") {
+        strong.classList.add("activeStrong");
+        setTimeout(() => {
+            strong.classList.remove("activeStrong");
+        }, 2000);
+    } else if (color == "#ff0") {
+        medium.classList.add("activeMedium");
+        setTimeout(() => {
+            medium.classList.remove("activeMedium");
+        }, 2000);
+    }
+
     passIndicator.style.backgroundColor = color;
     // shadow
     passIndicator.style.boxShadow = `0px 0px 12px 1px ${color}`;
@@ -74,6 +96,8 @@ function generateSymbol() {
     const randNum = getRandomInteger(0, symbols.length);
     return symbols.charAt(randNum);
 }
+
+
 
 function calculateStrength() {
     let isNumber = false;
@@ -182,7 +206,10 @@ generateBtn.addEventListener('click', () => {
     // if not any checkbox is checked then no password is generated.. so add event listener to checkboxes, and count them
 
     // case 1
-    if (chckboxCount == 0) return;
+    if (chckboxCount == 0) {
+        alert("please select at least one checkbox");
+        return;
+    }
 
 
     // case 2
@@ -233,10 +260,13 @@ generateBtn.addEventListener('click', () => {
     calculateStrength();
 })
 
+
 clearBtn.addEventListener('click', () => {
 
-    displayPass.value = "";
+    // displayPass.value = "";
+    // passLength = 4;
+    // handleSlider();
+    // setIndicator("#fff");
+    window.location.reload();
     passLength = 4;
-    handleSlider();
-    setIndicator("#fff");
 })
